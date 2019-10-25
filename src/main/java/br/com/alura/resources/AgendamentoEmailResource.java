@@ -1,6 +1,7 @@
 package br.com.alura.resources;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -11,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import br.com.alura.DTO.AgendamentoEmailDTO;
 import br.com.alura.business.AgendamentoEmailBusiness;
 import br.com.alura.domains.AgendamentoEmail;
 
@@ -25,8 +27,9 @@ public class AgendamentoEmailResource {
 	public Response listarAgendamentoEmail() {
 		
 		List<AgendamentoEmail> emails = agendamentoEmailBusiness.listaAgendamentosEmail();
+		List<AgendamentoEmailDTO> emailsDTO = emails.stream().map(obj -> new AgendamentoEmailDTO(obj)).collect(Collectors.toList());
 		
-		return Response.ok(emails).build();
+		return Response.ok(emailsDTO).build();
 	}
 	
 	@POST
